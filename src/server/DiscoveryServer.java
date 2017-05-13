@@ -53,11 +53,15 @@ public class DiscoveryServer implements Runnable {
 		
 		// this is weak - address could be null or wrong address
 		final String MY_IP = NetworkUtil.getMyAddress().getHostAddress();
-		
+		logger.info("My IP Address "+MY_IP);
 		// Keep a socket open to listen to all UDP trafic that is
 		// destined for this port.
 		try {
-			socket = new DatagramSocket(DISCOVERY_PORT, InetAddress.getByName("0.0.0.0"));
+			// 0.0.0.0 means all IPv4 address on this machine.
+			// Probably the best address to listen on.
+			InetAddress addr = InetAddress.getByName( "0.0.0.0" );
+//			InetAddress addr = NetworkUtil.getMyAddress();
+			socket = new DatagramSocket(DISCOVERY_PORT, addr);
 			// set flag to enable receipt of broadcast packets
 			socket.setBroadcast(true);
 		} catch (Exception ex) {
@@ -67,7 +71,8 @@ public class DiscoveryServer implements Runnable {
 			return;
 		}
 			
-		System.out.println("Server listening on port "+DISCOVERY_PORT);
+		System.out.printf("Server listening on %s port %d\n", 
+				socket.getInetAddress(), DISCOVERY_PORT);
 			
 		while (true) {
 			// Receive a packet
