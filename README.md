@@ -8,9 +8,9 @@ Java code for finding a local server using UDP broadcasts.
 
 ## How to Run
 
-1. After cloning the project, check the `DISCOVERY_PORT` value in `server/DiscoveryConfig.java`.  Use any available port above 1024.
+1. After cloning the project, check `DISCOVERY_PORT` in `server/DiscoveryConfig.java`.  Use any available port above 1024.
 2. Run the DiscoveryServer on one machine.
-3. On a different machine on the same LAN run DiscoveryClient.  It should print the server's address.  It sends a broadcast every 2 seconds until a response is received.
+3. On a different machine on the same LAN run DiscoveryClient.  It should print the server's address.  It sends a broadcast every 2 seconds until a response is received. You can run server and client on the same machine, too.
 
 Both client and server print several log messages on the console.  You can reconfigure the Logger (`java.util.logging.Logger`) to either print messages to a file or not log anything.
 
@@ -28,13 +28,12 @@ Example Client Output
 2017-05-13 14:37:22 DiscoveryClient INFO    Reply data: FOO_SERVER_IP 10.2.23.174
 ```
 
-## Issues That May Prevent From Working
+## Issues That May Prevent This From Working
 
 1. If client and server are on different LAN or VLAN the broadcasts won't be forwarded by intervening router.
-2. If client and server are on a Wifi network with "Wifi Isolation" enabled, the router won't allow direct connection.
-3. If client or server have more than one IP address, the broadcast might not be sent on the logical network that the server is listening on.  This can be fixed by testing for all IP addresses (and excluding loopback and other special addresses).
+2. If client and server are on a WiFi network with "WiFi Isolation" enabled, the router won't allow direct communication between them.
+3. If client or server have more than one IP address, the broadcast might not be sent on the logical network that the server is listening on.  This can be fixed by sending broadcasts on all IP addresses (excluding loopback and other special addresses).
 
-## Alternative: Multicast instead of Broadcast
 
 ## Reference
 
