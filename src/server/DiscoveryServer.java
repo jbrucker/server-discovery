@@ -27,7 +27,7 @@ import static server.DiscoveryConfig.*;
  */
 public class DiscoveryServer implements Runnable {
 	// how much data to accept from a broadcast client.
-	private static final int MAX_PACKET_SIZE = 16000;
+	private static final int MAX_PACKET_SIZE = 2048;
 	private static final Logger logger;
 	private DatagramSocket socket;
 	
@@ -71,8 +71,7 @@ public class DiscoveryServer implements Runnable {
 			return;
 		}
 			
-		System.out.printf("Server listening on %s port %d\n", 
-				socket.getInetAddress(), DISCOVERY_PORT);
+		System.out.printf("Server listening on port %d\n", DISCOVERY_PORT);
 			
 		while (true) {
 			// Receive a packet

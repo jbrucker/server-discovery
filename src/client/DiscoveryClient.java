@@ -2,11 +2,7 @@ package client;
 
 import java.io.IOException;
 import java.net.*;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.FutureTask;
+import java.util.concurrent.*; // For Callable, ExecutorServer, Executors, FutureTask
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -32,15 +28,12 @@ import static server.DiscoveryConfig.*;
  * @see https://demey.io/network-discovery-using-udp-broadcast/
  */
 public class DiscoveryClient implements Callable<String> {
-	private static final int MAX_PACKET_SIZE = 16000;
+	private static final int MAX_PACKET_SIZE = 2048;
 	/** maximum time to wait for a reply, in milliseconds. */
-	private static final int TIMEOUT = 5000; // milliseonds
+	private static final int TIMEOUT = 2000; // milliseonds
 	private static final Logger logger;
 
-	/**
-	 * Set an environment variable for logging format. This is for 1-line
-	 * messages.
-	 */
+	/* Set an environment variable for for 1-line log messages. */
 	static {
 		// %1=datetime %2=methodname %3=loggername %4=level %5=message
 		System.setProperty("java.util.logging.SimpleFormatter.format",
@@ -96,6 +89,8 @@ public class DiscoveryClient implements Callable<String> {
 	 * Send broadcast packets with service request string until a response
 	 * is received.  Return the response as String (even though it should 
 	 * contain an internet address).
+	 * @return String received from server. Should be server IP address.
+	 *    Returns empty string if failed to get valid reply.
 	 */
 	public String call() {
 		// Packet for receiving response from server
