@@ -6,6 +6,27 @@ Java code for finding a local server using UDP broadcasts.
 * `DiscoveryClient` - run on client to get server's IP address
 * `DiscoveryConfig` - constants used by both client and server
 
+## How to Run
+
+1. After cloning the project, check the `DISCOVERY_PORT` value in `server/DiscoveryConfig.java`.  Use any available port above 1024.
+2. Run the DiscoveryServer on one machine.
+3. On a different machine on the same LAN run DiscoveryClient.  It should print the server's address.  It sends a broadcast every 2 seconds until a response is received.
+
+Both client and server print several log messages on the console.  You can reconfigure the Logger (`java.util.logging.Logger`) to either print messages to a file or not log anything.
+
+Example Server Output
+```
+2017-05-13 14:37:07 DiscoveryServer INFO    My IP Address 10.2.23.174
+Server listening on port 8888
+2017-05-13 14:37:22 DiscoveryServer INFO    Packet received from 10.2.23.111:58852
+```
+
+Example Client Output
+```
+2017-05-13 14:37:22 DiscoveryClient INFO    Sent packet to 255.255.255.255:8888
+2017-05-13 14:37:22 DiscoveryClient INFO    Received reply from 10.2.23.174
+2017-05-13 14:37:22 DiscoveryClient INFO    Reply data: FOO_SERVER_IP 10.2.23.174
+```
 
 ## Issues That May Prevent From Working
 
