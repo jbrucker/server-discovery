@@ -1,6 +1,7 @@
 # Service Discover using UDP Broadcasts
 
-Java code for finding a local server using UDP broadcasts.
+Java code for finding a service running on a LAN using UDP broadcasts.
+The purpose is to "discover" a host for a particular service without entering the server's name or IP address on the client.
 
 * `DiscoveryServer` - runs on the server machine to receive and respond to discovery requiests
 * `DiscoveryClient` - run on client to get server's IP address
