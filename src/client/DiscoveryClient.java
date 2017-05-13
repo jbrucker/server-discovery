@@ -76,19 +76,13 @@ public class DiscoveryClient {
 			socket.send(packet);
 			logger.info( String.format("Sent packet to %s:%d", broadcastAddress.getHostAddress(), servicePort));
 			
-		} catch (IOException ioe) {
-			logger.log(Level.SEVERE, "Exception sending UDP packet", ioe);
-			return;
-		}
-		
-		// wait for reply
-		//TODO should use a thread with time-out
-		try {
+			// wait for reply
+			//TODO should use a thread with time-out
 			socket.receive(receivePacket);
 			logger.info("Received reply from "+receivePacket.getAddress().getHostAddress() );
 			logger.info("Reply data: "+new String(receivePacket.getData()));
 		} catch (IOException ioe) {
-			logger.log(Level.SEVERE, "Exception during receive", ioe);
+			logger.log(Level.SEVERE, "IOException during send/receive", ioe);
 		}
 	}
 }
