@@ -1,9 +1,9 @@
 # Service Discover using UDP Broadcasts
 
-Java code for finding a service running on a LAN using UDP broadcasts.
+Example Java code to find a service running on a LAN by using UDP broadcasts.
 The purpose is to "discover" a host for a particular service without entering the server's name or IP address on the client.
 
-* `DiscoveryServer` - runs on the server machine to receive and respond to discovery requiests
+* `DiscoveryServer` - runs on the server machine to receive and respond to discovery requests
 * `DiscoveryClient` - run on client to get server's IP address
 * `DiscoveryConfig` - constants used by both client and server
 
@@ -31,9 +31,13 @@ Example Client Output
 
 ## Issues That May Prevent This From Working
 
-1. If client and server are on different LAN or VLAN the broadcasts won't be forwarded by intervening router.
+1. If the client and server are on different LAN or VLAN then the broadcasts won't be forwarded by an intervening router.
 2. If client and server are on a WiFi network with "WiFi Isolation" enabled, the router won't allow direct communication between them.
 3. If client or server have more than one IP address, the broadcast might not be sent on the logical network that the server is listening on.  This can be fixed by sending broadcasts on all IP addresses (excluding loopback and other special addresses).
+
+## Improvements
+
+The DiscoveryClient returns the address of the first server that responds.  If there may be more than one server, then the client should wait a bit to give all servers a chance to respond and return a List of all responses, instead of just one.
 
 
 ## Reference
